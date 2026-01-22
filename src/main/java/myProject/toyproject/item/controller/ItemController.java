@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myProject.toyproject.item.dto.ItemCreateRequest;
+import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +93,42 @@ public class ItemController {
         Item item = itemService.getItem(itemId);
         model.addAttribute("item", item);
         return "item/item";
+    }
+
+    /***
+     * 상품 수정 폼으로 이동한다.
+     * @param itemId
+     * @param model
+     * @return
+     */
+    @GetMapping("/{itemId}/edit")
+    public String editForm(@PathVariable Long itemId, Model model){
+        log.info("itemId: " + itemId);
+        Item item = itemService.getItem(itemId);
+
+        ItemUpdateRequest form = new ItemUpdateRequest(item.getItemName(), item.getPrice(), item.getQuantity());
+        model.addAttribute("itemId", itemId);
+        model.addAttribute("form", form);
+        return "item/editForm";
+    }
+
+    /***
+     * 상품 수정을 완료하고 에러가 없다면 수정된 아이템의 상세페이지로 이동한다.
+     * @param form
+     * @param bindingResult
+     * @param itemId
+     * @return
+     */
+    @PostMapping("/{itemId}/edit")
+    public String edit(@Valid @ModelAttribute("form") ItemUpdateRequest form,
+                       BindingResult bindingResult, @PathVariable Long itemId){
+        log.info("itemId: " + itemId);
+        if (bindingResult.hasErrors()){
+            return "item/editForm";
+        }
+
+        itemService.updateItem(itemId, form);
+        return "redirect:/api/items/{itemId}";
     }
 
     /***
