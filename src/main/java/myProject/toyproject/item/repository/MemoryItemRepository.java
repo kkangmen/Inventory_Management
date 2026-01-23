@@ -8,7 +8,7 @@ import java.util.*;
 
 @Repository
 @Primary
-public class MemoryItemRepositoryImpl implements ItemRepository {
+public class MemoryItemRepository implements ItemRepository {
 
     private static final Map<Long, Item> store = new HashMap<>();
     private static Long sequence = 0L;
