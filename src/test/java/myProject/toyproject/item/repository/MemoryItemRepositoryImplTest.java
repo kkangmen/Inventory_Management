@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class MemoryItemRepositoryImplTest {
 
-    MemoryItemRepositoryImpl itemRepository = new MemoryItemRepositoryImpl();
+    MemoryItemRepository itemRepository = new MemoryItemRepository();
 
     @Test
     void save() {
