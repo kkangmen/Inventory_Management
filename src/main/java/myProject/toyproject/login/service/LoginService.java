@@ -18,7 +18,11 @@ public class LoginService {
 
     public Member login(LoginForm form){
         Optional<Member> findMember = memberRepository.findByLoginId(form.getLoginId());
-        Member member = findMember.get();
+        Member member = findMember.orElse(null);
+
+        if (member == null){
+            return null;
+        }
 
         if (member.getPassword().equals(form.getPassword())){
             return member;
