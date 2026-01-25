@@ -79,6 +79,7 @@ public class ItemController {
         // 2. 성공 로직
         Long itemId = itemService.createItem(form);
         redirectAttributes.addAttribute("itemId", itemId);
+        redirectAttributes.addAttribute("status", true);
         return "redirect:/api/items/{itemId}";
     }
 
