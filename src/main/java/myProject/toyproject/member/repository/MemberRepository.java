@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository {
-    Member save(MemberCreateRequest request);
+    Member save(Member member);
     Member findById(Long memberId);
     Optional<Member> findByLoginId(String loginId);
     List<Member> findAll();

@@ -7,6 +7,7 @@ import myProject.toyproject.item.repository.MemoryItemRepository;
 import myProject.toyproject.item.service.ItemServiceImpl;
 import myProject.toyproject.member.dto.MemberCreateRequest;
 import myProject.toyproject.member.repository.MemoryMemberRepository;
+import myProject.toyproject.member.service.MemberService;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class TestDataInit {
 
     private final ItemServiceImpl itemService;
-    private final MemoryMemberRepository memberRepository;
+    private final MemberService memberService;
 
     @PostConstruct
     public void init(){
@@ -31,6 +32,6 @@ public class TestDataInit {
         itemService.createItem(itemF);
 
         MemberCreateRequest memberCreateRequest = new MemberCreateRequest("test", "test", "tester");
-        memberRepository.save(memberCreateRequest);
+        memberService.save(memberCreateRequest);
     }
 }

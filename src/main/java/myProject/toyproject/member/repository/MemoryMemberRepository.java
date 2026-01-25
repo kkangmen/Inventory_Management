@@ -12,10 +12,8 @@ public class MemoryMemberRepository implements MemberRepository{
     private static final Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
 
-
     @Override
-    public Member save(MemberCreateRequest request) {
-        Member member = new Member(request.getLoginId(), request.getPassword(), request.getUsername());
+    public Member save(Member member) {
         member.setMemberId(++sequence);
         store.put(member.getMemberId(), member);
         return member;
