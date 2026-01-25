@@ -79,6 +79,7 @@ public class ItemController {
         // 2. 성공 로직
         Long itemId = itemService.createItem(form);
         redirectAttributes.addAttribute("itemId", itemId);
+        redirectAttributes.addAttribute("status", true);
         return "redirect:/api/items/{itemId}";
     }
 
@@ -129,19 +130,5 @@ public class ItemController {
 
         itemService.updateItem(itemId, form);
         return "redirect:/api/items/{itemId}";
-    }
-
-    /***
-     * 더미 데이터
-     */
-    @PostConstruct
-    public void init(){
-        ItemCreateRequest itemD = new ItemCreateRequest("itemD", 40000, 400);
-        ItemCreateRequest itemE = new ItemCreateRequest("itemE", 50000, 500);
-        ItemCreateRequest itemF = new ItemCreateRequest("itemF", 60000, 600);
-
-        itemService.createItem(itemD);
-        itemService.createItem(itemE);
-        itemService.createItem(itemF);
     }
 }
