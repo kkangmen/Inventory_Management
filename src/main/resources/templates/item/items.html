@@ -23,7 +23,7 @@
                                           onclick="location.href='addForm.html'"
                                           th:onclick="|location.href='@{/api/items/add}'|"
                                           type="button">
-      + 상품 등록
+      상품등록
     </button>
     </div>
   </div>
@@ -56,5 +56,10 @@
     </table>
   </div>
 
+  <div style="text-align: right">
+    <form th:action="@{/api/login/logout}" method="post">
+      <button class="btn btn-secondary" type="submit">로그아웃</button>
+    </form>
+  </div>
 </div> </body>
 </html>
