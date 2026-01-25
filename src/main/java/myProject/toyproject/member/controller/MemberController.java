@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import myProject.toyproject.member.dto.MemberCreateRequest;
 import myProject.toyproject.member.entity.Member;
 import myProject.toyproject.member.repository.MemberRepository;
+import myProject.toyproject.member.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @GetMapping("/add")
     public String addForm(Model model){
@@ -35,7 +36,14 @@ public class MemberController {
         if (bindingResult.hasErrors()){
             return "member/addForm";
         }
-        memberRepository.save(form);
+
+        Member duplicateId = memberService.findDuplicateId(form.getLoginId());
+        if (duplicateId != null){
+            bindingResult.rejectValue("loginId", "duplicateId", "이미 존재하는 아이디 입니다.");
+            return "member/addForm";
+        }
+
+        memberService.save(form);
         return "redirect:/";
     }
 }
