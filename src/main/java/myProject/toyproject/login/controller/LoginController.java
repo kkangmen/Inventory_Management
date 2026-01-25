@@ -4,17 +4,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import myProject.toyproject.login.dto.LoginForm;
 import myProject.toyproject.login.service.LoginService;
 import myProject.toyproject.member.entity.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/login")
@@ -23,29 +22,38 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form){
+    public String loginForm(@ModelAttribute("loginForm") LoginForm form,
+                            @RequestParam(defaultValue = "/") String redirectURL, Model model){
+        log.info("loginForm = {}", form);
+
+        model.addAttribute("redirectURL", redirectURL);
         return "home/loginForm";
     }
 
     @PostMapping
     public String login(@Valid @ModelAttribute("loginForm") LoginForm form,
-                        BindingResult bindingResult, HttpServletRequest request){
+                        BindingResult bindingResult, HttpServletRequest request,
+                        @RequestParam(defaultValue = "/") String redirectURL){
 
         if (bindingResult.hasErrors()){
+            log.info("error = {}", bindingResult);
             return "home/loginForm";
         }
 
         Member loginMember = loginService.login(form);
         if (loginMember == null){
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+
             return "home/loginForm";
         }
 
         HttpSession session = request.getSession(true);
         session.setAttribute("loginMember", loginMember);
-        return "redirect:/";
+
+        return "redirect:" + redirectURL;
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
         if (session != null){
