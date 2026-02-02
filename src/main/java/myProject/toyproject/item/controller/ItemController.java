@@ -1,5 +1,6 @@
 package myProject.toyproject.item.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/items")
 @Controller
+@Tag(name = "상품 관리", description = "상품 생성, 조회, 수정, 삭제 API")
 public class ItemController {
 
     private final ItemService itemService;
