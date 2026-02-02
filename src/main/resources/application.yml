@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: toyproject
+  datasource:
+    url: jdbc:mysql://localhost:3306/toy_project
+    username: root
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# server
+## ????? JSESSION ????
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
