@@ -3,11 +3,13 @@ package myProject.toyproject.item.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import myProject.toyproject.item.entity.Item;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
+@Primary
 public class JpaItemRepository implements ItemRepository {
 
     @PersistenceContext
