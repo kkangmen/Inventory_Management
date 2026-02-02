@@ -1,5 +1,6 @@
 package myProject.toyproject.item.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import myProject.toyproject.item.dto.ItemCreateRequest;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
@@ -16,6 +17,7 @@ public class ItemServiceImpl implements ItemService{
     private final ItemRepository itemRepository;
 
     @Override
+    @Transactional
     public Long createItem(ItemCreateRequest request) {
         Item item = new Item(request.getItemName(), request.getPrice(), request.getQuantity());
         Item savedItem = itemRepository.save(item);
@@ -23,11 +25,13 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    @Transactional
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Item getItem(Long itemId) {
         Item item = itemRepository.findById(itemId);
         if (item == null){
@@ -37,6 +41,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    @Transactional
     public void updateItem(Long itemId, ItemUpdateRequest request) {
         Item item = itemRepository.findById(itemId);
 
