@@ -7,8 +7,6 @@ import myProject.toyproject.member.entity.Member;
 import myProject.toyproject.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -22,10 +20,7 @@ public class MemberService {
         return member;
     }
 
-    @Transactional
-    public Member findDuplicateId(String loginId){
-        Optional<Member> member = memberRepository.findByLoginId(loginId);
-
-        return member.orElse(null);
+    public boolean existsByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId).isPresent();
     }
 }
