@@ -18,6 +18,14 @@
     <h2>상품 목록</h2>
   </div>
 
+  <div th:if="${weather != null}" class="alert alert-secondary d-flex align-items-center" role="alert" style="width: 300px; padding: 10px;">
+    <div>
+      <span class="badge bg-primary me-2">현재 날씨</span>
+      <strong th:text="${weather.temperature} + '°C'">20.5°C</strong>
+      <span class="ms-2" th:text="${weather.condition}">맑음/흐림</span>
+    </div>
+  </div>
+
   <div class="row mb-3">
     <div class="col-12 text-end"> <button class="btn btn-primary"
                                           onclick="location.href='addForm.html'"
