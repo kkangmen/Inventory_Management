@@ -9,6 +9,9 @@ import myProject.toyproject.item.dto.ItemCreateRequest;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
+import myProject.toyproject.weather.dto.WeatherDto;
+import myProject.toyproject.weather.service.WeatherService;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +30,19 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final WeatherService weatherService;
+
+    /***
+     * 기상청 단기예보 API 확인
+     */
+    @GetMapping("/weather")
+    @ResponseBody
+    public ResponseEntity<String> jsonWeatherApi(){
+        String jsonBody = weatherService.jpaGetKmaWeather();
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/json; charset=UTF-8")
+                .body(jsonBody);
+    }
 
     /***
      * 상품 목록을 가져온다.
@@ -37,6 +53,12 @@ public class ItemController {
     public String items(Model model){
         List<Item> allItems = itemService.getAllItems();
         model.addAttribute("items", allItems);
+
+        WeatherDto weather = weatherService.getKmaWeather();
+        if (weather != null){
+            model.addAttribute("weather", weather);
+        }
+
         return "item/items";
     }
 

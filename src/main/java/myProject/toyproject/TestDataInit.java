@@ -6,7 +6,6 @@ import myProject.toyproject.item.dto.ItemCreateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
 import myProject.toyproject.member.dto.MemberCreateRequest;
-import myProject.toyproject.member.entity.Member;
 import myProject.toyproject.member.service.MemberService;
 import org.springframework.stereotype.Component;
 
@@ -42,8 +41,7 @@ public class TestDataInit {
          */
         MemberCreateRequest memberCreateRequest = new MemberCreateRequest("test", "test", "tester");
 
-        Member duplicateId = memberService.findDuplicateId("test");
-        if (duplicateId == null){
+        if (!memberService.existsByLoginId("test")) {
             memberService.save(memberCreateRequest);
         }
     }
