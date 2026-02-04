@@ -1,7 +1,6 @@
 package myProject.toyproject.item.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +8,8 @@ import myProject.toyproject.item.dto.ItemCreateRequest;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
-import myProject.toyproject.weather.dto.WeatherDto;
+import myProject.toyproject.weather.dto.WeatherResponse;
 import myProject.toyproject.weather.service.WeatherService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,10 +36,10 @@ public class ItemController {
     @GetMapping("/weather")
     @ResponseBody
     public ResponseEntity<String> jsonWeatherApi(){
-        String jsonBody = weatherService.jpaGetKmaWeather();
+        String currentWeather = weatherService.jpaGetKmaWeather();
         return ResponseEntity.ok()
                 .header("Content-Type", "application/json; charset=UTF-8")
-                .body(jsonBody);
+                .body(currentWeather);
     }
 
     /***
@@ -54,9 +52,9 @@ public class ItemController {
         List<Item> allItems = itemService.getAllItems();
         model.addAttribute("items", allItems);
 
-        WeatherDto weather = weatherService.getKmaWeather();
-        if (weather != null){
-            model.addAttribute("weather", weather);
+        WeatherResponse currentWeather = weatherService.getCurrentWeather();
+        if (currentWeather != null){
+            model.addAttribute("weather", currentWeather);
         }
 
         return "item/items";

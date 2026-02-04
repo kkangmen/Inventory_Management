@@ -29,7 +29,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0' // Swagger 사용을 위한 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-webflux' // WebClient 사용을 위한 의존성 추가
+	testImplementation 'io.projectreactor:reactor-test'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'

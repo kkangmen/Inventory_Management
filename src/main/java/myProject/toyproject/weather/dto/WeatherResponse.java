@@ -3,7 +3,7 @@ package myProject.toyproject.weather.dto;
 import lombok.Data;
 
 @Data
-public class WeatherDto {
+public class WeatherResponse {
     private String temperature; // 온도 (T1H)
     private String condition; // 날씨 상태 (맑음, 비 등 - PTY)
 
