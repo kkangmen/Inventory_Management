@@ -22,7 +22,15 @@ server:
 # weather api
 weather:
   kma:
-    url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"
+    base-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
+    path: "/getUltraSrtNcst"
     service-key: "c214254ed99e867a419aabb1ea5488c94974b14c2f6304bd27a96aa33fc8c4f1"
     nx: 60
     ny: 123
+  fma:
+    url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"
+  ult:
+    base-url: "http://apis.data.go.kr/1360000/LivingWthrIdxServiceV4"
+    path: "/getUVIdxV4"
+    service-key: "c214254ed99e867a419aabb1ea5488c94974b14c2f6304bd27a96aa33fc8c4f1"
+    areaNo: 4143000000

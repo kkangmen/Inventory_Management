@@ -26,6 +26,13 @@
     </div>
   </div>
 
+  <div th:if="${ultraviolet != null}">
+      <div>
+        <span class="badge bg-primary me-2">현재 자외선 지수</span>
+        <strong th:text="${ultraviolet.ultIndex}">알 수 없음</strong>
+      </div>
+  </div>
+
   <div class="row mb-3">
     <div class="col-12 text-end"> <button class="btn btn-primary"
                                           onclick="location.href='addForm.html'"
