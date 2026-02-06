@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
                             "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
 
                             // [API 테스트 예외]
-                            "/api/items/weather"
+                            "/api/items/weather", "/api/ult"
                         );
     }
 }

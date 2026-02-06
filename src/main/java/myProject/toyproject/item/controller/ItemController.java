@@ -8,8 +8,13 @@ import myProject.toyproject.item.dto.ItemCreateRequest;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
+import myProject.toyproject.ultraviolet.dto.UltravioletDto;
+import myProject.toyproject.ultraviolet.service.UltravioletService;
+import myProject.toyproject.weather.dto.WeatherForecastResponse;
 import myProject.toyproject.weather.dto.WeatherResponse;
-import myProject.toyproject.weather.service.WeatherService;
+import myProject.toyproject.weather.service.RestClientWeatherService;
+import myProject.toyproject.weather.service.RestTemplateWeatherService;
+import myProject.toyproject.weather.service.WebClientWeatherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +22,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,19 +36,20 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-    private final WeatherService weatherService;
+    private final RestClientWeatherService restClientWeatherService;
+    private final UltravioletService ultravioletService;
+//    private final RestTemplateWeatherService restTemplateWeatherService;
+//    private final WebClientWeatherService webClientWeatherService;
 
     /***
-     * 기상청 단기예보 API 확인
+     * 함수: 초단기실황 API을 호출하여 Map 형태로 값을 받아온다.
+     * @return Map
      */
-    @GetMapping("/weather")
-    @ResponseBody
-    public ResponseEntity<String> jsonWeatherApi(){
-        String currentWeather = weatherService.jpaGetKmaWeather();
-        return ResponseEntity.ok()
-                .header("Content-Type", "application/json; charset=UTF-8")
-                .body(currentWeather);
-    }
+//    @GetMapping("/weather")
+//    @ResponseBody
+//    public ResponseEntity<Map> jsonWeatherApi(){
+//        return restClientWeatherService.getCurrentWeather();
+//    }
 
     /***
      * 상품 목록을 가져온다.
@@ -52,10 +61,11 @@ public class ItemController {
         List<Item> allItems = itemService.getAllItems();
         model.addAttribute("items", allItems);
 
-        WeatherResponse currentWeather = weatherService.getCurrentWeather();
-        if (currentWeather != null){
-            model.addAttribute("weather", currentWeather);
-        }
+        WeatherResponse currentWeather = restClientWeatherService.getCurrentWeather();
+        model.addAttribute("weather", currentWeather);
+
+        UltravioletDto ultraviolet = ultravioletService.getUltraviolet();
+        model.addAttribute("ultraviolet", ultraviolet);
 
         return "item/items";
     }
