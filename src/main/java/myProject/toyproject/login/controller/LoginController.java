@@ -15,21 +15,25 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
-@RequiredArgsConstructor
-@RequestMapping("/api/login")
 public class LoginController {
 
-    private final LoginService loginService;
+    // private final LoginService loginService;
 
-    @GetMapping
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form,
-                            @RequestParam(defaultValue = "/") String redirectURL, Model model){
-        log.info("loginForm = {}", form);
+    @GetMapping("/api/login")
+    public String loginForm(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "exception", required = false) String exeption,
+                            Model model){
 
-        model.addAttribute("redirectURL", redirectURL);
+        model.addAttribute("loginForm", new LoginForm());
+
+        if (error != null){
+            model.addAttribute("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+        }
+
         return "home/loginForm";
     }
 
+    /* Spring Security가 ?error 파라미터를 붙여서 리다이렉트 시켜준다.
     @PostMapping
     public String login(@Valid @ModelAttribute("loginForm") LoginForm form,
                         BindingResult bindingResult, HttpServletRequest request,
@@ -62,4 +66,5 @@ public class LoginController {
 
         return "redirect:/";
     }
+     */
 }

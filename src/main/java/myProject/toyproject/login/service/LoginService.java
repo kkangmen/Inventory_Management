@@ -17,6 +17,9 @@ public class LoginService {
 
     private final MemberRepository memberRepository;
 
+    // 스프링 시큐리티가 알아서 암호화된 비번을 비교해주어서
+    // 더 이상 비밀번호를 직접 비교 할 필요가 없다.
+
     public Member login(LoginForm form){
         Optional<Member> findMember = memberRepository.findByLoginId(form.getLoginId());
         Member member = findMember.orElse(null);

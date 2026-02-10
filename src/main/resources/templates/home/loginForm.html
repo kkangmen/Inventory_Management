@@ -45,7 +45,7 @@
             <h2>로그인</h2>
         </div>
 
-        <form action="item.html" th:action="@{/api/login(redirectURL=${redirectURL})}" th:object="${loginForm}" method="post">
+        <form action="item.html" th:action="@{/api/login/process}" th:object="${loginForm}" method="post">
 
             <div th:if="${#fields.hasGlobalErrors()}">
                 <p class="field-error text-center" th:each="err : ${#fields.globalErrors()}"
@@ -68,6 +68,19 @@
 
             <div class="d-grid gap-2">
                 <button class="btn btn-primary btn-login" type="submit">로그인</button>
+            </div>
+
+            <div>
+                <a href="/oauth2/authorization/google">
+                    <img src="/logo/web_light_rd_ctn@1x.png" alt="구글 아이디로 로그인"
+                         style="width: 300px; height: auto">
+                </a>
+            </div>
+            <div>
+                <a href="/oauth2/authorization/naver">
+                    <img src="/logo/NAVER_login_Dark_KR_green_center_H48.png" alt="네이버 아이디로 로그인"
+                    style="width: 350px; height: auto">
+                </a>
             </div>
 
             <hr class="my-4">
