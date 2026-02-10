@@ -39,7 +39,7 @@ public class TestDataInit {
         /**
          * 더미 데이터 중복 방지
          */
-        MemberCreateRequest memberCreateRequest = new MemberCreateRequest("test", "test", "tester");
+        MemberCreateRequest memberCreateRequest = new MemberCreateRequest("test", "test", "tester", "test@gmail.com");
 
         if (!memberService.existsByLoginId("test")) {
             memberService.save(memberCreateRequest);
