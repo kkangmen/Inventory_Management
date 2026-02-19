@@ -1,5 +1,6 @@
 package myProject.toyproject.item.repository;
 
+import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.entity.Item;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
@@ -39,7 +40,7 @@ public class MemoryItemRepository implements ItemRepository {
      * @return List<Item></Item>
      */
     @Override
-    public List<Item> findAll() {
+    public List<Item> findAll(ItemSearchCond cond) {
         return new ArrayList<>(store.values());
     }
 

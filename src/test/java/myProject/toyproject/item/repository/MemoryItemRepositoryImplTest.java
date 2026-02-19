@@ -38,7 +38,7 @@ class MemoryItemRepositoryImplTest {
         itemRepository.save(itemB);
 
         // then
-        List<Item> all = itemRepository.findAll();
+        List<Item> all = itemRepository.findAll(null);
         Assertions.assertThat(all.size()).isEqualTo(2);
     }
 
