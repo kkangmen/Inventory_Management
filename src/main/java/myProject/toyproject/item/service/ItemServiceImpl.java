@@ -3,6 +3,7 @@ package myProject.toyproject.item.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import myProject.toyproject.item.dto.ItemCreateRequest;
+import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.repository.ItemRepository;
@@ -25,8 +26,8 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
+    public List<Item> getAllItems(ItemSearchCond cond) {
+        return itemRepository.findAll(cond);
     }
 
     @Override

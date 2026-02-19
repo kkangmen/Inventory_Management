@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import myProject.toyproject.item.dto.ItemCreateRequest;
+import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
@@ -57,8 +58,8 @@ public class ItemController {
      * @return
      */
     @GetMapping
-    public String items(Model model){
-        List<Item> allItems = itemService.getAllItems();
+    public String items(Model model, @ModelAttribute("itemSearch")ItemSearchCond itemSearch){
+        List<Item> allItems = itemService.getAllItems(itemSearch);
         model.addAttribute("items", allItems);
 
         WeatherResponse currentWeather = restClientWeatherService.getCurrentWeather();

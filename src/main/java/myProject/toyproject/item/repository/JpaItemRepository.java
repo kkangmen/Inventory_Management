@@ -2,9 +2,11 @@ package myProject.toyproject.item.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.entity.Item;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -27,8 +29,16 @@ public class JpaItemRepository implements ItemRepository {
     }
 
     @Override
-    public List<Item> findAll() {
-        return em.createQuery("select i from Item i", Item.class).getResultList();
+    public List<Item> findAll(ItemSearchCond cond) {
+        String itemName = cond.getItemName();
+
+        if (!StringUtils.hasText(itemName)){
+            return em.createQuery("select i from Item i", Item.class).getResultList();
+        }
+
+        return em.createQuery("select i from Item i where i.itemName like :name", Item.class)
+                .setParameter("name", "%" + itemName + "%")
+                .getResultList();
     }
 
     @Override

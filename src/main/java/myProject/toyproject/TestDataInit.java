@@ -3,6 +3,7 @@ package myProject.toyproject;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import myProject.toyproject.item.dto.ItemCreateRequest;
+import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
 import myProject.toyproject.member.dto.MemberCreateRequest;
@@ -27,7 +28,7 @@ public class TestDataInit {
         /**
          * 더미 데이터 중복 방지
          */
-        List<Item> allItems = itemService.getAllItems();
+        List<Item> allItems = itemService.getAllItems(new ItemSearchCond());
         if (allItems.isEmpty()){
             itemService.createItem(new ItemCreateRequest("itemD", 40000, 400));
             itemService.createItem(new ItemCreateRequest("itemE", 50000, 500));
