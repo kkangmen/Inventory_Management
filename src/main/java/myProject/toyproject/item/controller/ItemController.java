@@ -9,6 +9,8 @@ import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
+import myProject.toyproject.member.entity.Member;
+import myProject.toyproject.security.dto.PrincipalDetails;
 import myProject.toyproject.ultraviolet.dto.UltravioletDto;
 import myProject.toyproject.ultraviolet.service.UltravioletService;
 import myProject.toyproject.weather.dto.WeatherForecastResponse;
@@ -17,6 +19,7 @@ import myProject.toyproject.weather.service.RestClientWeatherService;
 import myProject.toyproject.weather.service.RestTemplateWeatherService;
 import myProject.toyproject.weather.service.WebClientWeatherService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -79,7 +82,7 @@ public class ItemController {
     //@PostMapping
     @ResponseBody
     public ResponseEntity<Void> jsonCreateItem(ItemCreateRequest request){
-        Long itemId = itemService.createItem(request);
+        Long itemId = itemService.createItem(request, new Member());
         return ResponseEntity.created(URI.create("/api/items/" + itemId)).build();
     }
 
@@ -100,6 +103,7 @@ public class ItemController {
      */
     @PostMapping("/add")
     public String save(@Valid @ModelAttribute("form") ItemCreateRequest form,
+                       @AuthenticationPrincipal PrincipalDetails principal,
                        BindingResult bindingResult, RedirectAttributes redirectAttributes){
         log.info("상품명: " + form.getItemName());
 
@@ -110,7 +114,8 @@ public class ItemController {
         }
 
         // 2. 성공 로직
-        Long itemId = itemService.createItem(form);
+        Member loginMember = principal.getMember();
+        Long itemId = itemService.createItem(form, loginMember);
         redirectAttributes.addAttribute("itemId", itemId);
         redirectAttributes.addAttribute("status", true);
         return "redirect:/api/items/{itemId}";

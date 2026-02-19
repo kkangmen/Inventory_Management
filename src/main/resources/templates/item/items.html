@@ -61,10 +61,18 @@
       <th>상품명</th>
       <th>가격</th>
       <th>수량</th>
+      <th>등록자</th>
     </tr>
     </thead>
       <tbody>
-      <tr th:each="item : ${items}">
+
+      <tr th:if="${#lists.isEmpty(items)}">
+        <td colspan="5" class="text-center text-muted py-4">
+          등록된 상품이 존재하지 않습니다.
+        </td>
+      </tr>
+
+      <tr th:unless="${#lists.isEmpty(items)}" th:each="item : ${items}">
         <td th:text="${item.itemId}">1</td>
 
         <td>
@@ -76,6 +84,8 @@
         <td th:text="${item.price}">10000</td>
 
         <td th:text="${item.quantity}">10</td>
+
+        <td th:text="${item.member != null ? item.member.username : '알 수 없음'}">username</td>
       </tr>
       </tbody>
     </table>
