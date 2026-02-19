@@ -7,6 +7,7 @@ import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.service.ItemService;
 import myProject.toyproject.member.dto.MemberCreateRequest;
+import myProject.toyproject.member.entity.Member;
 import myProject.toyproject.member.service.MemberService;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class TestDataInit {
     private final ItemService itemService;
     private final MemberService memberService;
 
-    @PostConstruct
+    // @PostConstruct
     public void init(){
         initItems();
         initMembers();
@@ -30,9 +31,9 @@ public class TestDataInit {
          */
         List<Item> allItems = itemService.getAllItems(new ItemSearchCond());
         if (allItems.isEmpty()){
-            itemService.createItem(new ItemCreateRequest("itemD", 40000, 400));
-            itemService.createItem(new ItemCreateRequest("itemE", 50000, 500));
-            itemService.createItem(new ItemCreateRequest("itemF", 60000, 600));
+            itemService.createItem(new ItemCreateRequest("itemD", 40000, 400), new Member());
+            itemService.createItem(new ItemCreateRequest("itemE", 50000, 500), new Member());
+            itemService.createItem(new ItemCreateRequest("itemF", 60000, 600), new Member());
         }
     }
 

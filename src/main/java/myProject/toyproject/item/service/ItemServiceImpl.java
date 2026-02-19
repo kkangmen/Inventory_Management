@@ -7,6 +7,7 @@ import myProject.toyproject.item.dto.ItemSearchCond;
 import myProject.toyproject.item.dto.ItemUpdateRequest;
 import myProject.toyproject.item.entity.Item;
 import myProject.toyproject.item.repository.ItemRepository;
+import myProject.toyproject.member.entity.Member;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class ItemServiceImpl implements ItemService{
     private final ItemRepository itemRepository;
 
     @Override
-    public Long createItem(ItemCreateRequest request) {
-        Item item = new Item(request.getItemName(), request.getPrice(), request.getQuantity());
+    public Long createItem(ItemCreateRequest request, Member member) {
+        Item item = new Item(request.getItemName(), request.getPrice(), request.getQuantity(), member);
         Item savedItem = itemRepository.save(item);
         return savedItem.getItemId();
     }
@@ -47,7 +48,7 @@ public class ItemServiceImpl implements ItemService{
             throw new RuntimeException("아이템이 존재하지 않습니다.");
         }
 
-        Item updateItem = new Item(request.getItemName(), request.getPrice(), request.getQuantity());
+        Item updateItem = new Item(request.getItemName(), request.getPrice(), request.getQuantity(), item.getMember());
         itemRepository.update(itemId, updateItem);
     }
 

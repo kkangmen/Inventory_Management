@@ -1,6 +1,7 @@
 package myProject.toyproject.item.repository;
 
 import myProject.toyproject.item.entity.Item;
+import myProject.toyproject.member.entity.Member;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ class MemoryItemRepositoryImplTest {
     @Test
     void save() {
         // when
-        Item itemA = new Item("ItemA", 10000, 100);
+        Item itemA = new Item("ItemA", 10000, 100, new Member());
 
         // given
         Item save = itemRepository.save(itemA);
@@ -30,8 +31,8 @@ class MemoryItemRepositoryImplTest {
     @Test
     void findAll() {
         // when
-        Item itemA = new Item("ItemA", 10000, 100);
-        Item itemB = new Item("ItemB", 20000, 200);
+        Item itemA = new Item("ItemA", 10000, 100, new Member());
+        Item itemB = new Item("ItemB", 20000, 200, new Member());
 
         // given
         itemRepository.save(itemA);
