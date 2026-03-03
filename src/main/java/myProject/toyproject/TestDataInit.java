@@ -20,7 +20,7 @@ public class TestDataInit {
     private final ItemService itemService;
     private final MemberService memberService;
 
-    // @PostConstruct
+    // @PostConstructt
     public void init(){
         initItems();
         initMembers();
