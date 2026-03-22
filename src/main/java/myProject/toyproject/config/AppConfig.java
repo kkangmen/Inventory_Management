@@ -37,7 +37,7 @@ public class AppConfig {
 
     // 기상청 자외선지수조회 API
     @Bean
-    public RestClient ultRestClient(){
+    public RestClient ultRestClient() {
         return RestClient.builder()
                 .baseUrl(ultBaseUrl)
                 .build();
